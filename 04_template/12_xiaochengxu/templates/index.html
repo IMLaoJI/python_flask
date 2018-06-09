@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% from "macros.html" import itemGroup,listGroup %}
+
+{% block body %}
+    {{ listGroup("电影",movies,1) }}
+    {{ listGroup("电视剧",tvs,2) }}
+{% endblock %}

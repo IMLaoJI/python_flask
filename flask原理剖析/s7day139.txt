@@ -1,0 +1,216 @@
+s7day139
+
+博客示例：http://www.cnblogs.com/wupeiqi/articles/7552008.html
+
+内容回顾：
+	1. 装饰器
+				
+		"""
+		def wrapper(func):
+			def inner(*args, **kwargs):
+				return func(*args, **kwargs)
+			return inner
+
+
+		@wrapper # ####### index = wrapper(index)
+		def index(request):
+			pass
+		"""
+
+
+		url_map = {
+			'/index': index
+		}
+
+		def route(option): # {'k1':'v1'}
+			def inner(func,*args, **kwargs):
+				url_map[option['path']] = func
+			return inner
+
+		#inner = wrapper({'k1':'v1'})
+		#@inner --> inner(index)
+		@route({'path':'/index'})
+		def index(request):
+			pass
+	2. session & cookie原理
+	
+	
+	3. 继承字典
+		class MyDict(dict):
+			def __init__(self,*args,**kwargs):
+				super(MyDict,self).__init__(*args,**kwargs)
+				self['modify'] = True
+			
+		obj = MyDict()
+		print(obj)
+	
+	PS: 配置文件、全局变量大写
+	
+今日内容：Flask框架
+	1. 介绍Flask、Django、Tornado框架
+	
+	2. Flask快速入门
+	
+	3. 配置文件
+	
+	4. 路由系统
+	
+	5. 模板语言
+	
+	6. 请求&响应相关
+	
+	7. session & cookie
+	
+	8. 闪现
+	
+	9. 蓝图
+	
+	10. 请求扩展（django 中间件）
+	
+	11. 中间件
+	
+
+内容详细：
+	1. 介绍Flask、Django、Tornado框架
+		Django：重武器，内部包含了非常多组件：ORM、Form、ModelForm、缓存、Session、中间件、信号等...
+		Flask：短小精悍，内部没有太多组件。第三方组件非常丰富。
+			   路由比较特殊：基于装饰器来实现，但是究其本质还是通过add_url_rule来实现。
+		bottle：
+		web.py：
+		
+		Tornado：异步非阻塞框架（node.js）
+	
+	2. Flask快速入门
+		a.安装
+			pip3 install flask
+		b. wsgi,
+			werkzeug示例：
+				from werkzeug.wrappers import Request, Response
+
+				@Request.application
+				def hello(request):
+					return Response('Hello World!')
+
+				if __name__ == '__main__':
+					from werkzeug.serving import run_simple
+					run_simple('localhost', 4000, hello)
+					
+			wsgiref示例：
+				from wsgiref.simple_server import make_server
+				 
+				def runserver(environ, start_response):
+					start_response('200 OK', [('Content-Type', 'text/html')])
+					return [bytes('<h1>Hello, web!</h1>', encoding='utf-8'), ]
+				 
+				 
+				if __name__ == '__main__':
+					# obj = WSGIHandler()
+					httpd = make_server('', 8000, runserver)
+					httpd.serve_forever()
+					
+			本质的本质：
+				import socket
+				  
+				def handle_request(client):
+					buf = client.recv(1024)
+					client.send("HTTP/1.1 200 OK\r\n\r\n")
+					client.send("Hello, Seven")
+				  
+				def main():
+					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+					sock.bind(('localhost',8000))
+					sock.listen(5)
+				  
+					while True:
+						connection, address = sock.accept()
+						handle_request(connection)
+						connection.close()
+				  
+				if __name__ == '__main__':
+					main()
+		c. flask
+		
+			from flask import Flask
+			
+			# 实例化Flask对象
+			app = Flask(__name__)
+			 
+			@app.route('/')  # ---》 1. v = app.route('/')   2. v(hello_world)
+			def hello_world():
+				return 'Hello World!'
+			 
+			if __name__ == '__main__':
+				app.run()
+		
+		d. 应用demo
+			- 示例
+			- 装饰器：用户认证
+				- 装饰器 
+				- 多个装饰器
+				- 反向查找的名称不允许重复：endpoint
+			- 作业
+
+	3. 配置文件
+		app.config.from_object("settings.DevelopmentConfig")
+		
+		class Config(object):
+			DEBUG = False
+			TESTING = False
+			DATABASE_URI = 'sqlite://:memory:'
+
+
+		class ProductionConfig(Config):
+			DATABASE_URI = 'mysql://user@localhost/foo'
+
+
+		class DevelopmentConfig(Config):
+			DEBUG = True
+
+
+		class TestingConfig(Config):
+			TESTING = True
+	4. 路由系统
+		
+		PS: hosts文件
+			C:\Windows\System32\drivers\etc\hosts
+			/etc/hosts
+			
+		小工具：脚本 py文件【为公司测试人员开发的修改host文件的小程序】
+				python run.py 127.0.0.1 www.oldboyedu.com
+				
+				会议室预定
+				
+				调查问卷
+		
+	5. 模板语言
+	
+	6. 请求&响应相关
+	
+	7. session & cookie
+		
+	day139
+	
+	8. 闪现
+	
+	9. 蓝图
+	
+	10. 请求扩展（django 中间件）
+	
+	11. 中间件
+	
+	
+作业：
+	1. 路由中的装饰器
+	
+	2. 简单脚本hosts
+		python run.py del www.oldboyeud.com 
+		python run.py add www.oldboyeud.com 
+		python run.py add www.oldboyeud.com  9.9.9.9
+	
+	
+	
+	
+	
+	
+	
+	

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>中国工商银行转账页面</title>
+</head>
+<body>
+<form action="" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <table>
+        <tbody>
+            <tr>
+                <td>转到邮箱：</td>
+                <td><input type="email" name="email"></td>
+            </tr>
+            <tr>
+                <td>转账金额：</td>
+                <td><input type="text" name="money"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="立即转账"></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+</body>
+</html>

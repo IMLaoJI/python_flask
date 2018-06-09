@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>用户列表</h1>
+    <table>
+        {% for k,v in user_dict.items() %}
+        <tr>
+            <td>{{k}}</td>
+            <td>{{v.name}}</td>
+            <td>{{v['name']}}</td>
+            <td>{{v.get('name')}}</td>
+            <td><a href="/detail/{{k}}">查看详细</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>知了课堂</title>
+</head>
+<body>
+    {% if username == 'zhiliao' %}
+        <p>知了课堂</p>
+    {% else %}
+        <p>我不是知了课堂</p>
+    {% endif %}
+
+    {% if age >= 18 %}
+        <p>你可以进入网吧了</p>
+    {% else %}
+        <p>未成年人禁止进入网吧</p>
+    {% endif %}
+</body>
+</html>

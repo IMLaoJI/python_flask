@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="Keywords" content="" />
+        <meta name="description" content="" />
+        <title>banner轮播图</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                outline: 0;
+                border: 0;
+                vertical-align: baseline;
+            }
+
+            li {
+                list-style: none;
+            }
+
+            a {
+                color: #333;
+                text-decoration: none;
+            }
+
+            #wrap {
+                width: 1023px;
+                height: 400px;
+                position: relative;
+                overflow: hidden;
+                margin: 100px auto 0;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                -o-user-select: none;
+                user-select: none;
+            }
+
+            #imgs a {
+                position: absolute;
+                display: none;
+            }
+
+            #paging span {
+                display: block;
+                width: 42px;
+                height: 72px;
+                font-size: 36px;
+                color: white;
+                position: absolute;
+                top: 50%;
+                margin-top: -36px;
+                text-align: center;
+                line-height: 72px;
+                font-weight: bold;
+                background-color: rgb(33, 33, 33);
+                cursor: pointer;
+                font-family: serif;
+            }
+
+            #paging .previous {
+                left: 0;
+            }
+
+            #paging .next {
+                right: 0;
+            }
+
+            #btn {
+                overflow: hidden;
+                position: absolute;
+                bottom: 16px;
+                right: 15px;
+            }
+
+            #btn li {
+                float: left;
+                width: 30px;
+                height: 22px;
+                text-align: center;
+                line-height: 22px;
+                background-color: rgba(0, 0, 0, 0.4);
+                cursor: pointer;
+                margin: 0 6px;
+                color: #fff;
+                font-size: 12px;
+            }
+
+            #btn li.on {
+                background-color: rgba(0, 0, 0, 0.8);
+            }
+        </style>
+    </head>
+<body>
+
+    <div id="wrap">
+        <div id="imgs">
+            <a href="javascript: void(0);"><img src="img/1.jpg" alt="" width="1023" height="400"></a>
+            <a href="javascript: void(0);"><img src="img/3.jpg" alt="" width="1023" height="400"></a>
+            <a href="javascript: void(0);"><img src="img/2.jpg" alt="" width="1023" height="400"></a>
+            <a href="javascript: void(0);"><img src="img/3.jpg" alt="" width="1023" height="400"></a>
+        </div>
+        <div id="paging">
+            <span class="previous">&lt;</span>
+            <span class="next">&gt;</span>
+        </div>
+        <ul id="btn">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+    </div>
+
+<script>
+    
+    var wrap = document.getElementById("wrap");
+    var imgs = document.getElementById("imgs").getElementsByTagName("a");
+    var paging = document.getElementById("paging").getElementsByTagName("span");
+    var btn = document.getElementById("btn").getElementsByTagName("li");
+    var timer = 0;
+    var index = 0;
+
+    imgs[0].style.display = "block";
+    btn[0].className = "on";
+
+    // 点击
+    for (var i=0; i<btn.length; i++) {
+        btn[i].index = i;
+        btn[i].onclick = function() {
+            var that = this;
+            checkout(function() {
+                index = that.index;
+            });
+        };
+
+        // 禁止拖拽图片
+        imgs[i].ondrag = imgs[i].onmousedown = function(e) {
+            e = e || event;
+            e.preventDefault ? e.preventDefault() : window.event.returnValue = false;
+        }
+    }
+
+    for (var i=0; i<paging.length; i++) {
+        // 下一张
+        if (i) {
+            paging[i].onclick = function() {
+                checkout(function() {
+                    index++;
+                    index = index%imgs.length;
+                });
+            }
+
+        // 上一张
+        } else {
+            paging[i].onclick = function() {
+                checkout(function() {
+                    index--;
+                    if (index<0) index = imgs.length-1;
+                });
+            }
+        }
+    }
+
+    function checkout(callback) {
+        btn[index].className = "";
+        imgs[index].style.display = "none";
+        callback && callback();
+        btn[index].className = "on";
+        imgs[index].style.display = "block";
+    }
+
+    function auto() {
+        timer = setInterval(function() {
+            checkout(function() {
+                index++;
+                index = index%imgs.length;
+            });
+        }, 5000);
+    }
+
+    auto();
+
+    wrap.onmouseover = function() {
+        clearInterval(timer);
+    }
+    wrap.onmouseout = function() {
+        auto();
+    }
+
+</script>
+</body>
+</html>

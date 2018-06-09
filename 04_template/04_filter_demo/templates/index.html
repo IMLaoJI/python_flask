@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>知了课堂</title>
+</head>
+<body>
+{#    <p>位置的绝对值是：{{ position|abs }}</p>#}
+{#    <p>个性签名：{{ signature or '此人很懒，没有留下任何说明' }}</p>#}
+{#        <p>个性签名：{{ signature|safe }}</p>#}
+{#    {% autoescape off %}#}
+{#    {% endautoescape %}#}
+{#    <p>{{ persons[0] }}</p>#}
+{#    <p>{{ "我的名字是：%s"|format('zhiliao') }}</p>#}
+{#    <p>人数{{ persons|length }}</p>#}
+{#    {% if age|int == 18 %}#}
+{#        <p>年龄是18岁</p>#}
+{#    {% else %}#}
+{#        <p>年龄不是18岁</p>#}
+{#    {% endif %}#}
+{#    <p>{{ article|replace('hello','aaa') }}</p>#}
+{#    <p>{{ article|truncate(length=5) }}</p>#}
+{#    <p>{{ signature|striptags }}</p>#}
+{#    <p>{{ article|cut }}</p>#}
+    <p>发表时间：{{ create_time|handle_time }}</p>
+</body>
+</html>

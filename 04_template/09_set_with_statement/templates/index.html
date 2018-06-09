@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>知了课堂</title>
+</head>
+<body>
+    {% set username='知了课堂' %}
+    <p>用户名：{{ username }}</p>
+
+    {% with %}
+        {% set classroom = 'zhiliao1班' %}
+        <p>班级：{{ classroom }}</p>
+    {% endwith %}
+    <p>另外一个班级：{{ classroom }}</p>
+</body>
+</html>

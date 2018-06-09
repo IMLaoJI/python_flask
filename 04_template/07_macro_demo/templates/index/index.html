@@ -1,0 +1,29 @@
+{#{% from "macros.html" import input as input_field %}#}
+{% import "macros/macros.html" as macros with context %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>知了宏</title>
+</head>
+<body>
+    <h1>知了登录</h1>
+    <table>
+        <tbody>
+            <tr>
+                <td>用户名：</td>
+                <td>{{ macros.input('username') }}</td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td>{{ macros.input("password",type="password") }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>{{ macros.input(value="提交",type="submit") }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>{{ username }}</p>
+</body>
+</html>

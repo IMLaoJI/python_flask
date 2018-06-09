@@ -1,0 +1,48 @@
+
+
+{% macro listGroup(title,items,category) %}
+    <div class="list-group">
+        <div class="group-top">
+            <span class="group-title">{{ title }}</span>
+            <a href="{{ url_for('item_list',category=category) }}" class="more-btn">更多</a>
+        </div>
+        <div class="any-group">
+            {% for item in items[0:3] %}
+                {{ itemGroup(item,category) }}
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro itemGroup(item,category) %}
+    <div class="item-group">
+        <a href="{{ url_for('detail',category=category,id=item.id) }}"><img class="thumbnail" src="{{ item.thumbnail }}" alt=""></a>
+        <p class="item-title">{{ item.title|truncate(6) }}</p>
+        {{ itemRating(item.rating) }}
+    </div>
+{% endmacro %}
+
+{% macro itemRating(rating) %}
+    <p class="item-rating">
+        {% set lights = ((rating|int)/2)|int %}
+        {% set halfs = (rating|int)%2 %}
+        {% set grays = 5 - lights - halfs %}
+
+        {#渲染lights个高亮的星星#}
+        {% for light in range(0,lights) %}
+            <img src="{{ url_for('static',filename="image/rate_light.png") }}" alt="">
+        {% endfor %}
+
+        {#渲染lights个半高亮的星星#}
+        {% for half in range(0,halfs) %}
+            <img src="{{ url_for('static',filename="image/rate_half.jpg") }}" alt="">
+        {% endfor %}
+
+        {#渲染grays个半高亮的星星#}
+        {% for gray in range(0,grays) %}
+            <img src="{{ url_for('static',filename="image/rate_gray.png") }}" alt="">
+        {% endfor %}
+
+        {{ rating }}
+    </p>
+{% endmacro %}

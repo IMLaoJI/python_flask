@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    知了课堂首页
+{% endblock %}
+
+{% block body_block %}
+    {{ super() }}
+    {{ self.title() }}
+    <p style="background: green;">我是子模板中的代码</p>
+{% endblock %}
+
+<div>我是子模板中div中的代码</div>

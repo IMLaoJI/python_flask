@@ -1,0 +1,36 @@
+.item-list-group .item-list-top{
+    overflow: hidden;
+    padding: 10px;
+}
+.item-list-top .module-title{
+    float: left;
+}
+.item-list-top .more-btn{
+    float: right;
+}
+
+.list-group{
+    overflow: hidden;
+    padding: 0 10px;
+}
+.item-group{
+    float: left;
+    margin-right: 10px;
+}
+.item-group .thumbnail{
+    display: block;
+    width: 100px;
+    height: 150px;
+}
+.item-group .item-title{
+    font-size: 12px;
+    text-align: center;
+}
+.item-group .item-rating{
+    font-size: 12px;
+    text-align: center;
+}
+.item-rating img{
+    width: 10px;
+    height: 10px;
+}

@@ -1,0 +1,47 @@
+{% extends 'cms/cms_base.html' %}
+{% from "common/_macros.html" import static %}
+
+{% block title %}帖子管理{% endblock %}
+
+{% block head %}
+    <script src="{{ static('cms/js/posts.js') }}"></script>
+{% endblock %}
+
+{% block page_title %}
+    {{ self.title() }}
+{% endblock %}
+
+{% block main_content %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>标题</td>
+                <td>发布时间</td>
+                <td>板块</td>
+                <td>作者</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+                <tr data-id="{{ post.id }}" data-highlight="{{ 1 if post.highlight else 0 }}">
+                    <td><a target="_blank" href="{{ url_for('front.post_detail',post_id=post.id) }}">{{ post.title }}</a></td>
+                    <td>{{ post.create_time }}</td>
+                    <td>{{ post.board.name }}</td>
+                    <td>{{ post.author.username }}</td>
+                    <td>
+                        <button class="btn btn-default btn-xs highlight-btn">
+                            {% if post.highlight %}
+                                取消加精
+                            {% else %}
+                                加精
+                            {% endif %}
+                        </button>
+                        <button class="btn btn-danger btn-xs remove-btn">移除</button>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,264 @@
+s7day140 Flask
+
+内容回顾：
+	1. 框架区别
+		
+	2. 快速使用
+	
+	3. 配置文件 
+		- app.config.from_object("path.Class")
+		PS: 知识点
+			- django rest framework
+			- django 中间件 
+			
+			- 需求：
+					CPU占用率90%，发送报警：邮件/短信/微信
+					数据库操作：MySQL、DB2、SQLServer
+					缓存放在redis/memcache
+			
+	4. 路由系统
+		- 自定义路由
+		- CBV
+		- 正则 
+		PS: 作业，使用装饰实现用户认证？
+			- 装饰器
+			- endpoint
+			
+	5. 请求和响应
+		
+	6. 模板
+		
+	7. cookie&session
+
+	赠送：装饰器
+			import functools
+
+			def wapper(func):
+
+				@functools.wraps(func) # 帮助我们设置函数的元信息
+				def inner(*args,**kwargs):
+					return func(*args,**kwargs)
+
+				return inner
+
+			@wapper
+			def f1():
+				pass
+
+			@wapper
+			def f2():
+				pass
+
+			print(f1.__name__)
+			print(f2.__name__)
+
+今日内容：
+	8. 闪现
+	
+	9. 蓝图
+	
+	10. 请求扩展（django 中间件）
+	
+	11. 中间件
+	
+	12. 上下文管理 (*)
+		- ThreadLocal
+		- 源码（request）
+		
+		
+内容详细：
+	
+	8. 闪现
+		
+		应用：对临时数据操作，如：显示错误信息
+
+	9. 请求扩展（django 中间件）
+		a. 基于before_request做用户登录认证
+			@app.before_request
+			def process_request(*args,**kwargs):
+				if request.path == '/login':
+					return None
+				user = session.get('user_info')
+				if user:
+					return None
+				return redirect('/login')
+		b. 执行顺序
+			from flask import Flask,render_template,request,redirect,session,url_for
+			app = Flask(__name__)
+			app.debug = True
+			app.secret_key = 'siuljskdjfs'
+
+
+			@app.before_request
+			def process_request1(*args,**kwargs):
+				print('process_request1 进来了')
+
+			@app.before_request
+			def process_request2(*args,**kwargs):
+				print('process_request2 进来了')
+
+
+			@app.after_request
+			def process_response1(response):
+				print('process_response1 走了')
+				return response
+
+			@app.after_request
+			def process_response2(response):
+				print('process_response2 走了')
+				return response
+
+
+			@app.route('/index',methods=['GET'])
+			def index():
+				print('index函数')
+				return "Index"
+
+
+
+
+
+			if __name__ == '__main__':
+				app.run()
+				
+		c. 请求拦截后，response所有都执行
+			from flask import Flask,render_template,request,redirect,session,url_for
+			app = Flask(__name__)
+			app.debug = True
+			app.secret_key = 'siuljskdjfs'
+
+
+			@app.before_request
+			def process_request1(*args,**kwargs):
+				print('process_request1 进来了')
+				return "拦截"
+
+			@app.before_request
+			def process_request2(*args,**kwargs):  
+				print('process_request2 进来了')
+
+
+			@app.after_request
+			def process_response1(response):
+				print('process_response1 走了')
+				return response
+
+			@app.after_request
+			def process_response2(response):
+				print('process_response2 走了')
+				return response
+
+
+			@app.route('/index',methods=['GET'])
+			def index():
+				print('index函数')
+				return "Index"
+		
+		d. 定制错误信息
+			@app.errorhandler(404)
+			def error_404(arg):
+				return "404错误了"
+				
+		e. 模板中定制方法
+		
+						
+			@app.template_global()
+			def sb(a1, a2):
+				return a1 + a2
+			{{sb(1,2)}}  
+
+			
+			@app.template_filter()
+			def db(a1, a2, a3):
+				return a1 + a2 + a3
+			{{ 1|db(2,3)}}
+
+			
+		f. 第一次执行
+			@app.before_first_request
+			def first(*args,**kwargs):
+				pass
+
+		总结：
+			before_request
+			after_request
+			
+			
+	10. 中间件
+			from flask import Flask
+
+			app = Flask(__name__)
+
+			@app.route('/')
+			def index():
+				return 'Hello World!'
+
+			class Md(object):
+				def __init__(self,old_wsgi_app):
+					self.old_wsgi_app = old_wsgi_app
+
+				def __call__(self,  environ, start_response):
+					print('开始之前')
+					ret = self.old_wsgi_app(environ, start_response)
+					print('结束之后')
+					return ret
+
+			if __name__ == '__main__':
+				app.wsgi_app = Md(app.wsgi_app)
+				app.run()
+	9. 蓝图：blueprint
+	
+		目标：构造程序目录
+			  - 自己造
+			  - 蓝图造
+					- 批量url
+					- 模板路径/静态文件路径
+					- 请求扩展 
+						- 针对app
+						- 针对某个蓝图
+		选择：
+			- 一个应用程序：小型应用程序
+			- N个应用程序 ：大型应用程序：示例
+			
+			PS:  一个应用程序
+				 蓝图对象名称和函数名称重复
+	
+	
+	12. 上下文管理 (*)
+		- threading.local对象，用于为每个线程开辟一块空间来保存它独有的值。
+		
+		- 源码（request）
+			- 情况一：单进程单线程，基于全局变量做。
+			- 情况二：单进程多线程，threading.local对象。
+			- 情况二：单进程单线程（多个协程），threading.local对象做不到。
+			
+		- 决定：
+			- 以后不支持协程：threading.local对象。
+			- 支持：自定义类似threading.local对象（支持协程）
+		- 自定义类似threading.local对象
+		  PS: 
+			a. 
+				object.__setattr__(self, 'storage', {})
+				self.storage = {}
+			b.
+				对象.xx
+				 def __setattr__(self, key, value):
+					print(key,value)
+			
+		
+总结：
+	...
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

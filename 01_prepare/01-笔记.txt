@@ -1,0 +1,16 @@
+# Flask装备：
+
+### Python版本：
+Python3.6
+
+### Pycharm软件：
+官网地址：https://www.jetbrains.com/pycharm/download/#section=windows
+破解码：http://idea.yoonasy.com/
+
+### 安装虚拟环境：
+1. 安装virtualenv：
+2. 安装virtualenvwrapper：
+
+### 安装flask：
+`pip install flask`
+

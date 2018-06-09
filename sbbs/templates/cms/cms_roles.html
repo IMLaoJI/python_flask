@@ -1,0 +1,51 @@
+{% extends 'cms/cms_base.html' %}
+
+{% block head %}
+    <script src="{{ url_for('static',filename='cms/js/cms_roles.js') }}"></script>
+    <style>
+        .top-box a{
+            float: right;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}CMS组管理{% endblock %}
+
+{% block page_title %}
+    {{ self.title() }}
+{% endblock %}
+
+{% block main_content %}
+    <div class="top-box">
+        <a class="btn btn-warning add-board-btn" id="add-board-btn" href="{{ url_for('cms.add_role') }}">添加新组</a>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <th>组名</th>
+            <th>描述</th>
+            <th>权限</th>
+            <th>用户数</th>
+            <th>操作</th>
+        </thead>
+        <tbody>
+            {% for role in roles %}
+                <tr>
+                    <td>{{ role.name }}</td>
+                    <td>{{ role.desc }}</td>
+                    <td>
+                        {% for permission_dict in role.permission_dicts %}
+                            {{ permission_dict.popitem()[1][1] }}
+                            {% if not loop.last %}，{% endif %}
+                        {% endfor %}
+
+                    </td>
+                    <td>{{ role.users|length }}</td>
+                    <td>
+                        <a class="btn btn-primary btn-xs edit-role-btn" data-role-id="{{ role.id }}" href="{{ url_for('cms.edit_role',role_id=role.id) }}">编辑</a>
+                        <button class="btn btn-danger btn-xs delete-role-btn" data-role-id="{{ role.id }}">删除</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

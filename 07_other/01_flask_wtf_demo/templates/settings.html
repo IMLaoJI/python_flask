@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .username-input{
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<form action="" method="post">
+    <table>
+        <tbody>
+            <tr>
+                <td>{{ form.username.label }}</td>
+                <td>{{ form.username(class='username-input') }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.age.label }}</td>
+                <td>{{ form.age() }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.remember.label }}</td>
+                <td>{{ form.remember() }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.tags.label }}</td>
+                <td>{{ form.tags() }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="提交"></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+</body>
+</html>
